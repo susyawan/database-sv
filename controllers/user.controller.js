@@ -46,19 +46,19 @@ async function getUser(req, res) {
     );
     if (comparePassword) {
       const token = jwt.sign(
-        { user_name, admin: isTrue.user_admin },
+        { user_name, admin: isTrue.user_admin, address: isTrue.user_address },
         SECRET_KEY
       );
       models.user.update(
         { user_token: token },
         { where: { user_name: user_name } }
       );
-      res.send({ message: "Login successful", token: token });
+      res.send({ message: "success", token: token });
     } else {
-      res.send({ message: "Login failed password" });
+      res.send({ message: "password error" });
     }
   } else {
-    res.send({ message: "Login failed" });
+    res.send({ message: "user not found" });
   }
 }
 
